@@ -29,18 +29,19 @@ export class App extends Component {
   };
 
   addContact = newContact => {
-    this.state.contacts.filter(
-      contact =>
-        contact.name.toLowerCase().trim() ===
-          newContact.name.toLowerCase().trim() ||
-        contact.number.trim() === newContact.number.trim()
-    ).length
-      ? toast.error(`${newContact.name}: is already in contacts`, notifyOptions)
-      : this.setState(prevState => {
-          return {
-            contacts: [newContact, ...prevState.contacts],
-          };
-        });
+    const existing = this.state.contacts.find(
+      ({ name, number }) =>
+        name.toLowerCase().trim() === newContact.name.toLowerCase().trim() ||
+        number.trim() === newContact.number.trim()
+    );
+    if (existing) {
+      toast.error(`${newContact.name}: is already in contacts`, notifyOptions);
+    }
+    this.setState(prevState => {
+      return {
+        contacts: [newContact, ...prevState.contacts],
+      };
+    });
   };
 
   deleteContact = contactId => {
