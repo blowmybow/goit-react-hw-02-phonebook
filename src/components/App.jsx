@@ -35,7 +35,10 @@ export class App extends Component {
         number.trim() === newContact.number.trim()
     );
     if (existing) {
-      toast.error(`${newContact.name}: is already in contacts`, notifyOptions);
+      return toast.error(
+        `${newContact.name}: is already in contacts`,
+        notifyOptions
+      );
     }
     this.setState(prevState => {
       return {
